@@ -21,14 +21,6 @@ It enforces access control for different departments and grants specific privile
 
 ---
 
-## 🏗️ Project Structure
-linux-user-management/ │ create_users.sh # Main automation script logs/ │ user_setup.log # Output logs | docs/ │screenshots/ 
-
-# Verification outputs | README.md # Project documentation
-
-
----
-
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Clone the Repository
@@ -37,17 +29,22 @@ linux-user-management/ │ create_users.sh # Main automation script logs/ │ us
 git clone https://github.com/adeshileo/Devops-SA-Projects.git
 cd Devops-SA-Projects
 
+---
 
 ### 2️⃣ Make the Script Executable
 
 ```bash
 sudo chmod +x create_users.sh
 
-## 3️⃣ Run the Script 
+---
+
+### 3️⃣ Run the Script 
 ```bash
 sudo bash create_users.sh
 
-## The expected Script Output 
+---
+
+### The expected Script Output 
 
 - Create three groups: dev, qa, and ops
 
@@ -57,7 +54,9 @@ sudo bash create_users.sh
 
 - Grant sudo privileges to the ops user
 
-## 🧾 Example Output
+---
+
+### 🧾 Example Output
 
 - Creating group and directory for dev...
 - Creating user alice...
@@ -67,16 +66,22 @@ sudo bash create_users.sh
 - User bob added to group qa.
 - Setup complete.
 
-## 📁 Directory Permissions Snapshot
+---
+
+### 📁 Directory Permissions Snapshot
 
 - drwxrwx--- root dev /projects/dev
 - drwxrwx--- root qa  /projects/qa
 - drwxrwx--- root ops /projects/ops
 
-## 🔒 Security Notes
+---
+
+### 🔒 Security Notes
 
 - Always modify /etc/sudoers using visudo for syntax validation.
 
 - Limit sudo access only to trusted groups or users.
 
 - Ensure /projects has restricted permissions (chmod 750 for top-level directory if shared).
+
+---
