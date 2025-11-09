@@ -44,11 +44,6 @@ sudo bash create_users.sh
 
 ---
 
-<<<<<<< HEAD
-### The expected Script Output 
-=======
-## The expected Script Output 
->>>>>>> 7485ca9 (updated README.md)
 
 - Create three groups: dev, qa, and ops
 
@@ -60,11 +55,6 @@ sudo bash create_users.sh
 
 ---
 
-<<<<<<< HEAD
-### 🧾 Example Output
-=======
-## 🧾 Example Output
->>>>>>> 7485ca9 (updated README.md)
 
 - Creating group and directory for dev...
 - Creating user alice...
@@ -76,11 +66,6 @@ sudo bash create_users.sh
 
 ---
 
-<<<<<<< HEAD
-### 📁 Directory Permissions Snapshot
-=======
-## 📁 Directory Permissions Snapshot
->>>>>>> 7485ca9 (updated README.md)
 
 - drwxrwx--- root dev /projects/dev
 - drwxrwx--- root qa  /projects/qa
@@ -88,20 +73,9 @@ sudo bash create_users.sh
 
 ---
 
-<<<<<<< HEAD
-### 🔒 Security Notes
-=======
-## 🔒 Security Notes
->>>>>>> 7485ca9 (updated README.md)
-
 - Always modify /etc/sudoers using visudo for syntax validation.
 
 - Limit sudo access only to trusted groups or users.
 
 - Ensure /projects has restricted permissions (chmod 750 for top-level directory if shared).
 
-<<<<<<< HEAD
----
-=======
----
->>>>>>> 7485ca9 (updated README.md)
