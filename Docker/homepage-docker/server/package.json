@@ -1,0 +1,17 @@
+{
+  "name": "book-review-app",
+  "version": "1.0.0",
+  "description": "Two-tier Book Review App (client + Node/Express API)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

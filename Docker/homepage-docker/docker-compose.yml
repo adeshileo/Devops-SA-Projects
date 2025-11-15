@@ -1,0 +1,24 @@
+
+version: "3.9"
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: book-review-server
+    expose:
+      - "3000"
+    # No ports published = not accessible from host directly (safer)
+    # Nginx will reach it by service name "server"
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: book-review-client
+    ports:
+      - "8080:80"     # You visit http://localhost:8080
+    depends_on:
+      - server
+    restart: unless-stopped
