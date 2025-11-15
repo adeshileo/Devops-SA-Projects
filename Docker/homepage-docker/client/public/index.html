@@ -7,7 +7,111 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>📚 Welcome to Adeshile Review App</h1>
-  <p>This is a simple static homepage for your Book Review system.</p>
+  <main class="container">
+    <h1>📚 Welcome to Adeshile Review App</h1>
+    <p class="tagline">A simple two-tier Book Review system (Client + API)</p>
+
+    <section class="card">
+      <h2>Add a Review</h2>
+      <form id="review-form">
+        <div class="row">
+          <label for="title">Book Title</label>
+          <input id="title" name="title" type="text" placeholder="E.g., Clean Code" required />
+        </div>
+        <div class="row">
+          <label for="author">Author</label>
+          <input id="author" name="author" type="text" placeholder="E.g., Robert C. Martin" required />
+        </div>
+        <div class="row">
+          <label for="rating">Rating</label>
+          <select id="rating" name="rating" required>
+            <option value="">Select…</option>
+            <option value="1">★☆☆☆☆ (1)</option>
+            <option value="2">★★☆☆☆ (2)</option>
+            <option value="3">★★★☆☆ (3)</option>
+            <option value="4">★★★★☆ (4)</option>
+            <option value="5">★★★★★ (5)</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="text">Your Review</label>
+          <textarea id="text" name="text" rows="4" placeholder="What did you think?" required></textarea>
+        </div>
+        <button type="submit">Submit Review</button>
+        <p id="form-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Latest Reviews</h2>
+      <ul id="reviews" class="reviews"></ul>
+    </section>
+  </main>
+
+  <script>
+    const api = {
+      list: async () => (await fetch("/api/reviews")).json(),
+      create: async (payload) => {
+        const res = await fetch("/api/reviews", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error((await res.json()).error || "Failed to create review");
+        return res.json();
+      },
+    };
+
+    const reviewsEl = document.getElementById("reviews");
+    const form = document.getElementById("review-form");
+    const statusEl = document.getElementById("form-status");
+
+    function stars(n) {
+      const s = "★★★★★☆☆☆☆☆".slice(5 - n, 10 - n);
+      return `<span class="stars" aria-label="${n} out of 5">${s}</span>`;
+    }
+
+    function renderList(items) {
+      reviewsEl.innerHTML = items.map(r => `
+        <li class="review">
+          <div class="review-head">
+            <strong>${r.title}</strong> <span class="by">by ${r.author}</span>
+            <span class="rating">${stars(r.rating)}</span>
+          </div>
+          <p>${r.text}</p>
+          <time datetime="${r.createdAt}">${new Date(r.createdAt).toLocaleString()}</time>
+        </li>
+      `).join("");
+    }
+
+    async function refresh() {
+      const list = await api.list();
+      renderList(list);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Submitting…";
+      const payload = {
+        title: form.title.value.trim(),
+        author: form.author.value.trim(),
+        rating: Number(form.rating.value),
+        text: form.text.value.trim(),
+      };
+      try {
+        await api.create(payload);
+        form.reset();
+        statusEl.textContent = "Review added ✅";
+        await refresh();
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+      } finally {
+        setTimeout(() => (statusEl.textContent = ""), 2000);
+      }
+    });
+
+    // Initial load
+    refresh();
+  </script>
 </body>
 </html>
